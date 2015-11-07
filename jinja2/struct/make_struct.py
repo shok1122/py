@@ -39,8 +39,13 @@ now = datetime.datetime.now()
 param_date = now.strftime("%Y-%m-%d")
 
 # テンプレートファイルを指定
-env = Environment(loader=FileSystemLoader('./', encoding='utf8'))
-tpl = env.get_template('template_struct.h')
+path_template = "struct.h.template"
+if os.path.exists(path_template):
+	env = Environment(loader=FileSystemLoader('./', encoding='utf8'))
+	tpl = env.get_template(path_template)
+else:
+	print "file:" + path_template + " is not found."
+	quit()
 
 # テンプレートへの挿入
 html = tpl.render({'struct':param_struct, 'date':param_date, 'define':param_define, 'info_list':param_info_list, 'member_list':param_member_list})

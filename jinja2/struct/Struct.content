@@ -1,0 +1,3 @@
+static const int,	MaxValue = 100,	最大値
+int,				Index,			インデックス
+char,				Buf[100],		バッファ

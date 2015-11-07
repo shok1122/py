@@ -19,13 +19,17 @@ if not os.path.exists(path_content_file):
 
 # 指定ファイルからテンプレートに挿入するデータを取得
 param_member_list = []
+param_info_list = []
 for line in open(path_content_file, 'r'):
 	if not re.match("^\s*#", line):
-		type, name, comment = line[:-1].split(',')
-		type = type.strip()
-		name = name.strip()
-		comment = comment.strip()
-		param_member_list.append({'type':type, 'name':name, 'comment':unicode(comment, 'utf-8')})
+		if re.match("^\s*@", line):
+			param_info_list.append(line.strip())
+		else:
+			type, name, comment = line[:-1].split(',')
+			type = type.strip()
+			name = name.strip()
+			comment = comment.strip()
+			param_member_list.append({'type':type, 'name':name, 'comment':unicode(comment, 'utf-8')})
 
 root, ext = os.path.splitext(path_content_file)
 param_struct = os.path.basename(root)
@@ -39,7 +43,7 @@ env = Environment(loader=FileSystemLoader('./', encoding='utf8'))
 tpl = env.get_template('template_struct.h')
 
 # テンプレートへの挿入
-html = tpl.render({'struct':param_struct, 'date':param_date, 'define':param_define, 'member_list':param_member_list})
+html = tpl.render({'struct':param_struct, 'date':param_date, 'define':param_define, 'info_list':param_info_list, 'member_list':param_member_list})
 
 # ファイルへの書き込み
 tmpfile = open(param_struct + ".h", 'w')

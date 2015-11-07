@@ -6,6 +6,12 @@
 #ifndef {{define}}
 #define {{define}}
 
+/**
+ * @struct {{struct}}
+{%- for info in info_list %}
+ * {{info}}
+{%- endfor %}
+ */
 struct {{struct}}
 {
 {%- for member in member_list %}
@@ -14,3 +20,4 @@ struct {{struct}}
 }
 
 #endif /* {{define}} */
+

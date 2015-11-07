@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, sys, datetime
+import os, sys, datetime, re
 from jinja2 import Environment, FileSystemLoader
 
 # 引数取得
@@ -20,11 +20,12 @@ if not os.path.exists(path_content_file):
 # 指定ファイルからテンプレートに挿入するデータを取得
 param_member_list = []
 for line in open(path_content_file, 'r'):
-	type, name, comment = line[:-1].split(',')
-	type = type.strip()
-	name = name.strip()
-	comment = comment.strip()
-	param_member_list.append({'type':type, 'name':name, 'comment':unicode(comment, 'utf-8')})
+	if not re.match("^\s*#", line):
+		type, name, comment = line[:-1].split(',')
+		type = type.strip()
+		name = name.strip()
+		comment = comment.strip()
+		param_member_list.append({'type':type, 'name':name, 'comment':unicode(comment, 'utf-8')})
 
 root, ext = os.path.splitext(path_content_file)
 param_struct = os.path.basename(root)

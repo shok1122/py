@@ -30,6 +30,29 @@ struct {{struct}}
 		{%- endif %}
 	{%- endfor %}
 	}
+
+	/**
+	 * compare struct
+	 */
+	bool compare({{struct}}* a_psThat)
+	{
+	{%- for m in member_list %}
+		{%- if m.format != "sc" %}
+			{%- if m.array == "binary" %}
+		if (0 != memset({{m.name}}, a_psThat->{{m.name}}, sizeof({{m.name}})))
+			{%- elif m.array == "string" %}
+		if (0 != strncmp({{m.name}}, a_psThat->{{m.name}}, sizeof({{m.name}})))
+			{%- else %}
+		if ({{m.name}} != a_psThat->{{m.name}})
+			{%- endif %}
+		{
+			return false;
+		}
+		{%- endif %}
+	{%- endfor %}
+
+		return true;
+	}
 }
 
 #endif /* {{define}} */

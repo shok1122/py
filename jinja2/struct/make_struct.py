@@ -35,7 +35,10 @@ for line in open(path_content_file, 'r'):
 			if re.match(".*\[.*\]", name):
 				name, size = name.split("[")
 				size = "[" + size
-				array = "binary"
+				if format == "s":
+					array = "string"
+				else:
+					array = "binary"
 			param_member_list.append({'format':format, 'type':type, 'array':array, 'name':name, 'size':size, 'comment':unicode(comment, 'utf-8')})
 
 root, ext = os.path.splitext(path_content_file)

@@ -20,6 +20,14 @@ struct {{struct}}
 	
 	{{struct}}()
 	{
+		clear();
+	}
+
+	/**
+	 * set 0 to all params
+	 */
+	void clear()
+	{
 	{%- for m in member_list %}
 		{%- if m.format != "sc" %}
 			{%- if m.array %}

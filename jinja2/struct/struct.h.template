@@ -15,7 +15,7 @@
 struct {{struct}}
 {
 {%- for m in member_list %}
-	{% if m.format == "sc" %}static const {% endif %}{{m.type}} {{m.name}}{{m.size}}; ///< {{m.comment}}
+	{% if m.prefix == "sc" %}static const {% endif %}{{m.type}} {{m.name}}{{m.size}}; ///< {{m.comment}}
 {%- endfor %}
 	
 	{{struct}}()
@@ -29,7 +29,7 @@ struct {{struct}}
 	void clear()
 	{
 	{%- for m in member_list %}
-		{%- if m.format != "sc" %}
+		{%- if m.prefix != "sc" %}
 			{%- if m.array %}
 		memset({{m.name}}, 0, sizeof({{m.name}});
 			{%- else %}
@@ -45,7 +45,7 @@ struct {{struct}}
 	bool compare({{struct}}* a_psThat)
 	{
 	{%- for m in member_list %}
-		{%- if m.format != "sc" %}
+		{%- if m.prefix != "sc" %}
 			{%- if m.array == "binary" %}
 		if (0 != memset({{m.name}}, a_psThat->{{m.name}}, sizeof({{m.name}})))
 			{%- elif m.array == "string" %}

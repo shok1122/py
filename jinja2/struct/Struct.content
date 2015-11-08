@@ -1,5 +1,5 @@
-sc,	int,	maxValue = 100,	最大値
-sc,	char,	scBuf[5],			バッファ
-i,	int,	index,			インデックス
-b,	char,	buf[100],		バッファ
-s,	char,	str[20],		文字列
+sc,	i,	int,	maxValue = 100,	最大値
+sc,	b,	char,	scBuf[5],		バッファ
+,	i,	int,	index,			インデックス
+,	b,	char,	buf[100],		バッファ
+,	w,	char,	str[20],		文字列

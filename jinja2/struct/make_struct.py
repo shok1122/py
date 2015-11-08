@@ -22,14 +22,21 @@ param_member_list = []
 param_info_list = []
 for line in open(path_content_file, 'r'):
 	if not re.match("^\s*#", line):
+		array = ""
+		size = ""
 		if re.match("^\s*@", line):
 			param_info_list.append(line.strip())
 		else:
-			type, name, comment = line[:-1].split(',')
+			format, type, name, comment = line[:-1].split(',')
 			type = type.strip()
 			name = name.strip()
 			comment = comment.strip()
-			param_member_list.append({'type':type, 'name':name, 'comment':unicode(comment, 'utf-8')})
+			format = format.strip()
+			if re.match(".*\[.*\]", name):
+				name, size = name.split("[")
+				size = "[" + size
+				array = "binary"
+			param_member_list.append({'format':format, 'type':type, 'array':array, 'name':name, 'size':size, 'comment':unicode(comment, 'utf-8')})
 
 root, ext = os.path.splitext(path_content_file)
 param_struct = os.path.basename(root)

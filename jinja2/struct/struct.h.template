@@ -33,7 +33,11 @@ struct {{struct}}
 			{%- if m.array %}
 		memset({{m.name}}, 0, sizeof({{m.name}});
 			{%- else %}
+				{%- if m.format == "s" %}
+		{{m.name}}->clear();
+				{%- else %}
 		{{m.name}} = 0;
+				{%- endif %}
 			{%- endif %}
 		{%- endif %}
 	{%- endfor %}
@@ -51,7 +55,11 @@ struct {{struct}}
 			{%- elif m.array == "string" %}
 		if (0 != strncmp({{m.name}}, a_psThat->{{m.name}}, sizeof({{m.name}})))
 			{%- else %}
+				{%- if m.format == "s" %}
+		if (false == {{m.name}}->comapre(a_psThat->{{m.name}}))
+				{%- else %}
 		if ({{m.name}} != a_psThat->{{m.name}})
+				{%- endif %}
 			{%- endif %}
 		{
 			return false;

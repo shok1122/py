@@ -3,3 +3,4 @@ sc,	b,	char,	scBuf[5],		バッファ
 ,	i,	int,	index,			インデックス
 ,	b,	char,	buf[100],		バッファ
 ,	w,	char,	str[20],		文字列
+,	s,	Goat,	goat,			構造体：ヤギ
